@@ -1,0 +1,105 @@
+#VRML_SIM R2021a utf8
+WorldInfo {
+  info [
+    "Boomer 3050 Tractor"
+  ]
+  title "Boomer 3050 Tractor"
+  ERP 0.7
+  physics "Bekker_Model"
+  basicTimeStep 20
+  coordinateSystem "NUE"
+  lineScale 1
+  contactProperties [
+    ContactProperties {
+      material1 "soil"
+      material2 "frontTireMaterial"
+      coulombFriction [
+        0
+      ]
+      bounce 0
+    }
+    ContactProperties {
+      material1 "soil"
+      material2 "rearTireMaterial"
+      coulombFriction [
+        0
+      ]
+      bounce 0
+    }
+  ]
+}
+Viewpoint {
+  orientation 0.002957550992338446 0.7106303535441879 0.7035593461207021 3.1475671865616293
+  position -1.5360480490457447 41.69437694969475 -5.355717327493386
+  follow "vehicle"
+  followType "None"
+  followSmoothness 0
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+DEF FLOOR Solid {
+  children [
+    DEF PLANE_SHAPE Shape {
+      appearance Parquetry {
+        type "chequered"
+        textureTransform TextureTransform {
+          scale 100 100
+        }
+      }
+      geometry Plane {
+        size 1000.0000000000003 1000.0000000000002
+      }
+      castShadows FALSE
+    }
+  ]
+  contactMaterial "soil"
+  boundingObject USE PLANE_SHAPE
+}
+DEF LINE_ROBOT Robot {
+  translation 1 0 1
+  controller "supervisor_draw_trail"
+  supervisor TRUE
+}
+DEF TRACTOR Tractor {
+  translation -12.5 0.6 -10
+  rotation 1 0 0 0.1309
+  controller "circle_test"
+  sensorSlot [
+    Emitter {
+    }
+    Camera {
+      translation -8.630814e-10 0.97344943 1.9889894
+      rotation -3.592801893310027e-10 0.9971888181431856 -0.07492970686047722 3.1415926
+      children [
+        Transform {
+          translation 0 0 0.05
+          rotation 1 0 0 1.5708
+          children [
+            Shape {
+              appearance PBRAppearance {
+                roughness 1
+                metalness 0
+              }
+              geometry Cylinder {
+                height 0.1
+                radius 0.04
+              }
+            }
+          ]
+        }
+      ]
+      fieldOfView 1
+      width 128
+    }
+    SickLms291 {
+      translation -2.4859527e-10 0.57400942 2.311692
+      rotation 0 0.9975390707399396 -0.07011278305200722 3.1415926
+    }
+    GPS {
+    }
+    Gyro {
+    }
+  ]
+}

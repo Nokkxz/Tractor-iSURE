@@ -1,0 +1,128 @@
+#VRML_SIM R2021a utf8
+WorldInfo {
+  info [
+    "Boomer 3050 Tractor"
+  ]
+  title "Boomer 3050 Tractor"
+  ERP 0.7
+  physics "Bekker_Model"
+  basicTimeStep 20
+  coordinateSystem "NUE"
+  lineScale 1
+  contactProperties [
+    ContactProperties {
+      material1 "soil"
+      material2 "frontTireMaterial"
+      coulombFriction [
+        0
+      ]
+      bounce 0
+    }
+    ContactProperties {
+      material1 "soil"
+      material2 "rearTireMaterial"
+      coulombFriction [
+        0
+      ]
+      bounce 0
+    }
+  ]
+}
+Viewpoint {
+  orientation -0.010435968335846675 0.9597928534410417 0.28051518505848577 3.034890821860308
+  position 4.413053963939179 12.270976154041314 -11.27685215939366
+  follow "robot"
+  followSmoothness 0
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+DEF FLOOR Solid {
+  children [
+    DEF PLANE_SHAPE Shape {
+      appearance Parquetry {
+        type "chequered"
+        textureTransform TextureTransform {
+          scale 100 100
+        }
+      }
+      geometry Plane {
+        size 1000.0000000000003 1000.0000000000002
+      }
+      castShadows FALSE
+    }
+  ]
+  contactMaterial "soil"
+  boundingObject USE PLANE_SHAPE
+}
+Robot {
+  translation 1 0 1
+  children [
+    DEF TRACTOR Tractor {
+      translation 2 0.6 2
+      rotation 1 0 0 0.1308996938995747
+      controller "sinusoidal_test"
+      sensorSlot [
+        Emitter {
+        }
+        Camera {
+          translation -8.630814e-10 0.97344943 1.9889894
+          rotation -3.592801893310027e-10 0.9971888181431856 -0.07492970686047722 3.1415926
+          children [
+            Transform {
+              translation 0 0 0.05
+              rotation 1 0 0 1.5708
+              children [
+                Shape {
+                  appearance PBRAppearance {
+                    roughness 1
+                    metalness 0
+                  }
+                  geometry Cylinder {
+                    height 0.1
+                    radius 0.04
+                  }
+                }
+              ]
+            }
+          ]
+          fieldOfView 1
+          width 128
+        }
+        SickLms291 {
+          translation -2.4859527e-10 0.57400942 2.311692
+          rotation 0 0.9975390707399396 -0.07011278305200722 3.1415926
+        }
+        GPS {
+        }
+        Gyro {
+        }
+      ]
+    }
+  ]
+  physics Physics {
+  }
+  controller "supervisor_draw_trail"
+  supervisor TRUE
+}
+DEF BOX Solid {
+  translation -4.32 0.5 0
+  children [
+    DEF BOX_SHAPE Shape {
+      appearance PBRAppearance {
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 1 1 1
+      }
+    }
+  ]
+  name "solid(1)"
+  boundingObject USE BOX_SHAPE
+  physics Physics {
+    density -1
+    mass 10
+  }
+}
